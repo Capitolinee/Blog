@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WelCome To Capitoline WB</title>
+    <link rel="stylesheet" type="text/css" href="CSS\styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Capitoline</h1>
+        <!-- 新增登入按鈕 -->
+        <a href="login.html" id="login-button" style="position: absolute; top: 15px; right: 20px;">
+          <i class="fa fa-user fa-2x"></i>
+        </a>
+        <!-- 新增登出按鈕 -->
+        <a href="logout.html" id="logout-button" style="position: absolute; top: 10px; right: 60px;">
+          <i class="fa fa-sign-out"></i>
+        </a>
+    </div>
+    <!-- 將導航欄連結放在一個 div 中 -->
+    <div style="position: absolute; right: 100px;">
+      <div class="nav">
+        <a href="#">首頁</a>
+        <a href="#">最新消息</a>
+        <div class="dropdown">
+            <a href="#">Twitch實況</a>
+            <div class="dropdown-content">
+                <a href="#">實況頻道</a>
+                <a href="#">實況日程</a>
+                <a href="#">遊戲紀錄</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">關於我</a>
+            <div class="dropdown-content">
+                <a href="#">個人介紹</a>
+                <a href="#">生活趣事</a>
+                <a href="#">聯絡方式</a>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- 包裹元素 -->
+    <div class="post-wrapper">
+      <!-- 部落格文章 -->
+      <div class="blog-post">
+          <h2 class="post-title">部落格文章標題</h2>
+          <p class="post-content">這是一些部落格文章的內容。</p>
+          <i class="edit-button">✏️</i>
+          <i class="delete-button">🗑️</i>
+      </div>
+      <!-- 按鈕 -->
+      <button id="add-button">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+    <!-- 模態視窗 -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+          <span class="close">×</span>
+          <h2 id="modal-title"></h2>
+          <label for="input-title">文章標題<br></label>
+          <input type="text" id="input-title" placeholder="輸入新的文章標題"><br>
+          <label for="input-content">文章內容<br></label>
+          <textarea id="input-content" placeholder="輸入新的文章內容"></textarea>
+          <button id="save-button">儲存</button>
+      </div>
+    </div>
+    <!-- 閱讀更多的模態視窗 -->
+    <div id="readMoreModal" class="modal">
+      <div class="modal-content">
+        <span class="close">×</span>
+        <h2 id="readMoreModal-title"></h2>
+        <p id="readMoreModal-content"></p>
+        <p id="readMoreModal-date"></p> <!-- 用於顯示日期的元素 -->
+      </div>
+    </div>
+    <!-- 頁腳 -->
+    <footer>
+        <p>版權所有 © 2024 Capitoline</p> <!-- 若有持續更新年份則依序往後填寫 2024-2025 -->
+        <p><a href="mailto:your-email@example.com">聯絡我</a></p>
+    </footer>
+    <script src="JS\script.js"></script>
+    <script>
+      // 函數來取得 cookie
+      function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+      }
+
+      // 檢查用戶的登入狀態
+      function isLoggedIn() {
+          return getCookie('loggedIn') === 'true';
+      }
+
+      // 登入
+      function login() {
+          // 設定一個名為'loggedIn'的cookie，值為'true'
+          document.cookie = 'loggedIn=true;path=/';
+          updateButtons();
+      }
+
+      // 登出
+      function logout() {
+          // 刪除'loggedIn'的cookie
+          document.cookie = 'loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          updateButtons();
+      }
+
+      // 根據用戶的登入狀態來顯示或隱藏按鈕
+      function updateButtons() {
+          if (isLoggedIn()) {
+              document.getElementById('login-button').style.display = 'none';
+              document.getElementById('logout-button').style.display = 'block';
+          } else {
+              document.getElementById('login-button').style.display = 'block';
+              document.getElementById('logout-button').style.display = 'none';
+          }
+      }
+
+      // 為登入和登出按鈕綁定點擊事件
+      document.getElementById('login-button').addEventListener('click', function() {
+          // 顯示一個彈出視窗，讓用戶選擇登入方式
+          var loginMethod = prompt('請選擇登入方式：1. Google 2. Facebook');
+          if (loginMethod === '1') {
+              // 呼叫 Google 登入 API...
+          } else if (loginMethod === '2') {
+              // 呼叫 Facebook 登入 API...
+          }
+      });
+      document.getElementById('logout-button').addEventListener('click', logout);
+
+      // 初始化按鈕狀態
+      updateButtons();
+    </script>
+</body>
+</html>
